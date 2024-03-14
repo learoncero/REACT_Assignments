@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Board</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <h1>Message Board</h1>
+  <table>
+    <tr>
+      <a>
+        <td id="addMessage">
+          Add Message
+        </td>
+      </a>
+      <a>
+        <td id="messages">
+          Messages <span id="counter">(0)</span>
+        </td>
+      </a>
+    </tr>
+  </table>
+  <hr>
+  <div id="formDiv">
+    <form id="form">
+      <label>
+        Subject
+        <input type="text" required name="subject">
+      </label>
+      <br>
+      <label>
+        Body
+        <input type="text" required name="body">
+      </label>
+      <br>
+      <button type="Submit">Submit</button>
+    </form>
+  </div>
+  <div id="listDiv">
+    <p id="messagesText">You have 0 unread messages.</p>
+    <ul id="list"></ul>
+  </div>
+  <script type="module" src="dist/index.js"></script>
+</body>
+</html>
