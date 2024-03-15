@@ -7,12 +7,12 @@ type Props = {
 
 export default function MessageListItem({ message, onMessageRead }: Props) {
   return (
-    <div>
-      <MessageListItem
-        key={message.id}
-        message={message}
-        onMessageRead={() => onMessageRead()}
-      />
-    </div>
+    <>
+      <li>
+        <h5>{message.subject}</h5>
+        <p>{message.body}</p>
+        {/* <button onClick={onMessageRead}>Mark as read</button> */}
+      </li>
+    </>
   );
 }

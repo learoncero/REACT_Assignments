@@ -6,7 +6,7 @@ type Props = {
   onMessageRead(id: number): void;
 };
 
-export default function MessageList({ messages, onMessageRead }: Props) {
+export default function MessagesList({ messages, onMessageRead }: Props) {
   return (
     <ul>
       {messages.map((message) => (

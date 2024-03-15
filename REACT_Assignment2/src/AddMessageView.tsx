@@ -7,8 +7,8 @@ type Props = {
 export default function AddMessageView({ onSubmit }: Props) {
   function onFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
 
+    const form = event.currentTarget;
     const data = new FormData(form);
     const subject = data.get("subject") as string;
     const body = data.get("body") as string;

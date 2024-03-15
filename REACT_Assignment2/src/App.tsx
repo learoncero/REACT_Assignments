@@ -1,7 +1,7 @@
 import { useState } from "react";
-import MessageList from "./MessageList";
 import AddMessageView from "./AddMessageView";
 import Header from "./Header";
+import MessagesView from "./MessagesView";
 
 export type Message = {
   id: number;
@@ -14,17 +14,17 @@ let messageID = 0;
 
 export default function App() {
   const [messages, setMessages] = useState<Array<Message>>([]);
-  // const [isAddMessageViewVisible, setAddMessageView] = useState(true);
+  // const [tabIndex, setTabIndex] = useState(0);
 
   function onSubmit(subject: string, body: string) {
-    const newMessage = {
-      id: messageID++,
+    const id = messageID++;
+
+    const newMessages = messages.concat({
+      id: id,
       subject: subject,
       body: body,
       read: false,
-    };
-
-    const newMessages = messages.concat(newMessage);
+    });
 
     setMessages(newMessages);
   }
@@ -51,7 +51,7 @@ export default function App() {
     <div>
       <Header />
       <AddMessageView onSubmit={onSubmit} />
-      <MessageList messages={messages} onMessageRead={onMessageRead} />
+      <MessagesView messages={messages} onMessageRead={onMessageRead} />
     </div>
   );
 }
