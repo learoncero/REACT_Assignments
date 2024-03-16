@@ -1,7 +1,6 @@
 import { useState } from "react";
-import AddMessageView from "./AddMessageView";
 import Header from "./Header";
-import MessagesView from "./MessagesView";
+import Navigation from "./Navigation";
 
 export type Message = {
   id: number;
@@ -14,7 +13,7 @@ let messageID = 0;
 
 export default function App() {
   const [messages, setMessages] = useState<Array<Message>>([]);
-  // const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
 
   function onSubmit(subject: string, body: string) {
     const id = messageID++;
@@ -47,11 +46,20 @@ export default function App() {
     });
   }
 
+  function onTabChange(tabIndex: number) {
+    setTabIndex(tabIndex);
+  }
+
   return (
     <div>
       <Header />
-      <AddMessageView onSubmit={onSubmit} />
-      <MessagesView messages={messages} onMessageRead={onMessageRead} />
+      <Navigation
+        messages={messages}
+        tabIndex={tabIndex}
+        onTabChange={onTabChange}
+        onSubmit={onSubmit}
+        onMessageRead={onMessageRead}
+      />
     </div>
   );
 }

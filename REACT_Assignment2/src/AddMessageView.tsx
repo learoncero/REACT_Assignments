@@ -1,4 +1,5 @@
 import { FormEvent } from "react";
+import "./AddMessageView.css";
 
 type Props = {
   onSubmit(subject: string, body: string): void;
@@ -23,12 +24,22 @@ export default function AddMessageView({ onSubmit }: Props) {
     <form className="addMessageForm" onSubmit={onFormSubmit}>
       <label>
         Subject
-        <input type="text" required name="subject" />
+        <input
+          className="addMessageForm-input"
+          type="text"
+          required
+          name="subject"
+        />
       </label>
       <br />
       <label>
         Body
-        <input type="text" required name="body" />
+        <input
+          className="addMessageForm-input"
+          type="text"
+          required
+          name="body"
+        />
       </label>
       <br />
       <button type="submit">Submit</button>

@@ -1,5 +1,6 @@
 import { Message } from "./App";
 import MessagesList from "./MessagesList";
+import MessagesSummary from "./MessagesSummary";
 
 type Props = {
   messages: Array<Message>;
@@ -7,5 +8,14 @@ type Props = {
 };
 
 export default function MessagesView({ messages, onMessageRead }: Props) {
-  return <MessagesList messages={messages} onMessageRead={onMessageRead} />;
+  return (
+    <>
+      {messages.length === 0 ? (
+        <p>You have no messages.</p>
+      ) : (
+        <MessagesSummary messages={messages} />
+      )}
+      <MessagesList messages={messages} onMessageRead={onMessageRead} />
+    </>
+  );
 }

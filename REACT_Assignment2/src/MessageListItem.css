@@ -1,0 +1,11 @@
+.messageListItem-messageRead {
+  color: black;
+}
+
+.messageListItem-messageUnread {
+  color: red;
+}
+
+li {
+  cursor: pointer;
+}

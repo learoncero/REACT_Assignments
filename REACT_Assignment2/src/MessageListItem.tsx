@@ -1,4 +1,5 @@
 import { Message } from "./App";
+import "./MessageListItem.css";
 
 type Props = {
   message: Message;
@@ -8,11 +9,18 @@ type Props = {
 export default function MessageListItem({ message, onMessageRead }: Props) {
   return (
     <>
-      <li>
-        <h5>{message.subject}</h5>
+      <li
+        className={
+          message.read
+            ? "messageListItem-messageRead"
+            : "messageListItem-messageUnread"
+        }
+        onClick={onMessageRead}
+      >
+        <strong>{message.subject}</strong>
         <p>{message.body}</p>
-        {/* <button onClick={onMessageRead}>Mark as read</button> */}
       </li>
+      <hr />
     </>
   );
 }
