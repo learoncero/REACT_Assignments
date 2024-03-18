@@ -18,7 +18,9 @@ export default function Navigation({
   onSubmit,
   onMessageRead,
 }: Props) {
-  const unreadMessages = messages.filter((message) => !message.read);
+  const unreadMessagesCount = messages.filter(
+    (message) => !message.read
+  ).length;
 
   return (
     <div>
@@ -27,8 +29,12 @@ export default function Navigation({
           <tr>
             <td onClick={() => onTabChange(0)}>Add Message</td>
             <td onClick={() => onTabChange(1)}>
-              Messages (
-              {unreadMessages.length > 5 ? "5+" : unreadMessages.length})
+              Messages{" "}
+              {unreadMessagesCount > 5
+                ? "5+"
+                : unreadMessagesCount !== 0
+                ? "(" + unreadMessagesCount + ")"
+                : null}
             </td>
           </tr>
         </tbody>

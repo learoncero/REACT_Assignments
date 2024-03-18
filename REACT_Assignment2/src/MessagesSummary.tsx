@@ -5,14 +5,16 @@ type Props = {
 };
 
 export default function MessagesSummary({ messages }: Props) {
-  const unreadMessages = messages.filter((message) => !message.read);
+  const unreadMessagesCount = messages.filter(
+    (message) => !message.read
+  ).length;
 
   return (
     <>
-      {unreadMessages.length === 1 ? (
+      {unreadMessagesCount === 1 ? (
         <p>You have one unread message.</p>
       ) : (
-        <p>You have {unreadMessages.length} unread messages.</p>
+        <p>You have {unreadMessagesCount} unread messages.</p>
       )}
     </>
   );
