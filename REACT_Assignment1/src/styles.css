@@ -1,35 +1,15 @@
-body {
-    width: 50%;
-}
-
-table {
-    width: 50%;
-}  
-
-td:hover {
-    cursor: pointer;
-}
-
-hr {
-    margin-bottom: 1rem;
-}
-
 #formDiv {
-    display: block;
+  display: block;
 }
 
 #listDiv {
-    display: none;
+  display: none;
 }
 
 input {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 ul {
-    list-style: none;
-}
-
-li {
-    cursor: pointer;
+  list-style: none;
 }

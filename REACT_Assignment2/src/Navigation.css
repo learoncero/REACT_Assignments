@@ -1,0 +1,8 @@
+hr {
+  margin-bottom: 1rem;
+}
+
+td:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
