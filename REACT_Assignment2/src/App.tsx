@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./Header";
-import Navigation from "./Navigation";
+import AddMessageView from "./AddMessageView";
+import MessagesView from "./MessagesView";
 
 export type Message = {
   id: number;
@@ -52,14 +53,16 @@ export default function App() {
 
   return (
     <div>
-      <Header />
-      <Navigation
+      <Header
         messages={messages}
         tabIndex={tabIndex}
         onTabChange={onTabChange}
-        onSubmit={onSubmit}
-        onMessageRead={onMessageRead}
       />
+      <hr />
+      {tabIndex === 0 && <AddMessageView onSubmit={onSubmit} />}
+      {tabIndex === 1 && (
+        <MessagesView messages={messages} onMessageRead={onMessageRead} />
+      )}
     </div>
   );
 }
