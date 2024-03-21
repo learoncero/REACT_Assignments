@@ -11,7 +11,7 @@ export default function MessagesView({ messages, onMessageRead }: Props) {
   return (
     <>
       {messages.length === 0 ? (
-        <p>You have no messages.</p>
+        <p className="px-10 py-5 font-medium">You have no messages.</p>
       ) : (
         <MessagesSummary messages={messages} />
       )}

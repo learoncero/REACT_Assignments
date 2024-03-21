@@ -22,8 +22,14 @@ export default function AddMessageView({ onSubmit }: Props) {
   }
 
   return (
-    <form className="addMessageForm" onSubmit={onFormSubmit}>
-      <FormInputField label="Subject" name="subject" type="text" required={true} />
+    <form className="w-full max-w-sm" onSubmit={onFormSubmit}>
+      <div className="md:flex md:items-center mb-6"></div>
+      <FormInputField
+        label="Subject"
+        name="subject"
+        type="text"
+        required={true}
+      />
       <FormInputField label="Body" name="body" type="text" required={true} />
       <FormSubmitButton />
     </form>

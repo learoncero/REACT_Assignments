@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "./Header";
 import AddMessageView from "./AddMessageView";
 import MessagesView from "./MessagesView";
+import TabsDemo from "./test";
 
 export type Message = {
   id: number;
@@ -53,12 +54,12 @@ export default function App() {
 
   return (
     <div>
+      {/* <TabsDemo /> */}
       <Header
         messages={messages}
         tabIndex={tabIndex}
         onTabChange={onTabChange}
       />
-      <hr />
       {tabIndex === 0 && <AddMessageView onSubmit={onSubmit} />}
       {tabIndex === 1 && (
         <MessagesView messages={messages} onMessageRead={onMessageRead} />

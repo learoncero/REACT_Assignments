@@ -6,20 +6,26 @@ type Props = {
 };
 
 export default function MessageListItem({ message, onMessageRead }: Props) {
+  const commonClasses = "border-l-4 w-full text-left";
+
   return (
-    <>
-      <li
-        className={
-          message.read
-            ? "messageListItem-messageRead"
-            : "messageListItem-messageUnread"
-        }
-        onClick={onMessageRead}
-      >
-        <strong>{message.subject}</strong>
-        <p>{message.body}</p>
+    <div>
+      <li className="pb-3">
+        <button
+          className={
+            message.read
+              ? `${commonClasses} border-slate-300`
+              : `${commonClasses} border-red-800 bg-slate-50`
+          }
+          type="button"
+          onClick={onMessageRead}
+        >
+          <div className="px-5">
+            <strong>{message.subject}</strong>
+            <p>{message.body}</p>
+          </div>
+        </button>
       </li>
-      <hr />
-    </>
+    </div>
   );
 }

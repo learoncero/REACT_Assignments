@@ -9,15 +9,14 @@ type Props = {
 export default function MessagesList({ messages, onMessageRead }: Props) {
   const reversedMessages = messages.slice().reverse();
   return (
-    <ul>
-    {
-        reversedMessages.map((message) => (
-          <MessageListItem
-            key={message.id}
-            message={message}
-            onMessageRead={() => onMessageRead(message.id)}
-          />
-        ))}
+    <ul className="px-10">
+      {reversedMessages.map((message) => (
+        <MessageListItem
+          key={message.id}
+          message={message}
+          onMessageRead={() => onMessageRead(message.id)}
+        />
+      ))}
     </ul>
   );
 }
