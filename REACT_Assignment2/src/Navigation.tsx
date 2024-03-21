@@ -15,13 +15,13 @@ export default function Navigation({ messages, tabIndex, onTabChange }: Props) {
   return (
     <div>
       <button
-        className={tabIndex === 0 ? "tabActive" : "tabInactive"}
+        className={tabIndex === 0 ? "Navigation-tabActive" : "Navigation-tabInactive"}
         onClick={() => onTabChange(0)}
       >
         Add Message
       </button>
       <button
-        className={tabIndex === 1 ? "tabActive" : "tabInactive"}
+        className={tabIndex === 1 ? "Navigation-tabActive" : "Navigation-tabInactive"}
         onClick={() => onTabChange(1)}
       >
         Messages{" "}
