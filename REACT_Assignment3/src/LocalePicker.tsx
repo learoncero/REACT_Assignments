@@ -2,7 +2,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useTranslations } from "use-intl";
 
 type Props = {
-  onLocaleChange(locale: "en" | "de"): void;
+  onLocaleChange(locale: "en" | "de" | "fr"): void;
 };
 
 export default function LocalePicker({ onLocaleChange }: Props) {
@@ -33,6 +33,9 @@ export default function LocalePicker({ onLocaleChange }: Props) {
             </DropdownMenu.Item>
             <DropdownMenu.Item className="group text-[13px] leading-none text-violet11 rounded-[3px] flex items-center h-[35px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1">
               <button onClick={() => onLocaleChange("de")}>Deutsch</button>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className="group text-[13px] leading-none text-violet11 rounded-[3px] flex items-center h-[35px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1">
+              <button onClick={() => onLocaleChange("fr")}>Français</button>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>

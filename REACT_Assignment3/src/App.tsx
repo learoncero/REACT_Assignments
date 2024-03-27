@@ -60,6 +60,29 @@ const messagesByLocale = {
       dropdownTrigger: "DE",
     },
   },
+  fr: {
+    Header: {
+      heading: "Tableau de messages",
+    },
+    NavigationTab: {
+      addMessage: "AJOUTER UN MESSAGE",
+      messages: "MESSAGES",
+    },
+    FormInputField: {
+      subject: "Sujet",
+      body: "Contenu",
+    },
+    FormSubmitButton: {
+      submit: "Envoyer",
+    },
+    MessagesSummary: {
+      summary:
+        "{unreadMessagesCount, plural, =0 {Vous n'avez aucun message non lu.} =1 {Vous avez un message non lu.} other Vous avez {unreadMessagesCount} messages non lu.}}",
+    },
+    LocalePicker: {
+      dropdownTrigger: "FR",
+    },
+  },
 };
 
 let messageID = 0;
