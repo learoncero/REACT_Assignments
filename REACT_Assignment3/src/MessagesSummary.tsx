@@ -1,21 +1,24 @@
+import { useTranslations } from "use-intl";
 import { Message } from "./App";
 
 type Props = {
   messages: Array<Message>;
 };
 
-export default function MessagesSummary({ messages }: Props) {
+export default function UnreadMessagesSummary({ messages }: Props) {
   const unreadMessagesCount = messages.filter(
     (message) => !message.read
   ).length;
 
+  const t = useTranslations("MessagesSummary");
+
   return (
     <div className="px-10 py-5 font-medium">
-      {unreadMessagesCount === 1 ? (
-        <p>You have one unread message.</p>
-      ) : (
-        <p>You have {unreadMessagesCount} unread messages.</p>
-      )}
+      <p>
+        {t("summary", {
+          unreadMessagesCount: unreadMessagesCount,
+        })}
+      </p>
     </div>
   );
 }

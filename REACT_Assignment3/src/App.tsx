@@ -2,7 +2,9 @@ import { useState } from "react";
 import Header from "./Header";
 import AddMessageView from "./AddMessageView";
 import MessagesView from "./MessagesView";
-import TabsDemo from "./test";
+import * as Tabs from "@radix-ui/react-tabs";
+import Navigation from "./Navigation";
+import { IntlProvider } from "use-intl";
 
 export type Message = {
   id: number;
@@ -11,11 +13,61 @@ export type Message = {
   read: boolean;
 };
 
+const messagesByLocale = {
+  en: {
+    Header: {
+      heading: "Message Board",
+    },
+    NavigationTab: {
+      addMessage: "ADD MESSAGE",
+      messages: "MESSAGES",
+    },
+    FormInputField: {
+      subject: "Subject",
+      body: "Body",
+    },
+    FormSubmitButton: {
+      submit: "Submit",
+    },
+    MessagesSummary: {
+      summary:
+        "{unreadMessagesCount, plural, =0 {You have no unread messages.} =1 {You have one unread message.} other {You have {unreadMessagesCount} unread messages.}}",
+    },
+    LocalePicker: {
+      dropdownTrigger: "EN",
+    },
+  },
+  de: {
+    Header: {
+      heading: "Nachrichtenboard",
+    },
+    NavigationTab: {
+      addMessage: "NACHRICHT HINZUFÜGEN",
+      messages: "NACHRICHTEN",
+    },
+    FormInputField: {
+      subject: "Betreff",
+      body: "Text",
+    },
+    FormSubmitButton: {
+      submit: "Absenden",
+    },
+    MessagesSummary: {
+      summary:
+        "{unreadMessagesCount, plural, =0 {Sie haben keine ungelesenen Nachrichten.} =1 {Sie haben eine ungelesene Nachricht.} other {Sie haben {unreadMessagesCount} ungelesene Nachrichten.}}",
+    },
+    LocalePicker: {
+      dropdownTrigger: "DE",
+    },
+  },
+};
+
 let messageID = 0;
 
 export default function App() {
   const [messages, setMessages] = useState<Array<Message>>([]);
   const [tabIndex, setTabIndex] = useState(0);
+  const [locale, setLocale] = useState<"en" | "de">("en");
 
   function onSubmit(subject: string, body: string) {
     const id = messageID++;
@@ -52,18 +104,31 @@ export default function App() {
     setTabIndex(tabIndex);
   }
 
+  function onLocaleChange(locale: "en" | "de") {
+    setLocale(locale);
+  }
+
   return (
-    <div>
-      {/* <TabsDemo /> */}
-      <Header
-        messages={messages}
-        tabIndex={tabIndex}
-        onTabChange={onTabChange}
-      />
-      {tabIndex === 0 && <AddMessageView onSubmit={onSubmit} />}
-      {tabIndex === 1 && (
-        <MessagesView messages={messages} onMessageRead={onMessageRead} />
-      )}
-    </div>
+    <IntlProvider
+      locale={locale}
+      messages={messagesByLocale[locale]}
+      timeZone="Europe/Vienna"
+    >
+      <Header />
+      <Tabs.Root defaultValue="AddMessageTab">
+        <Navigation
+          messages={messages}
+          tabIndex={tabIndex}
+          onTabChange={onTabChange}
+          onLocaleChange={onLocaleChange}
+        />
+        <Tabs.Content value="AddMessageTab">
+          <AddMessageView onSubmit={onSubmit} />
+        </Tabs.Content>
+        <Tabs.Content value="MessagesTab">
+          <MessagesView messages={messages} onMessageRead={onMessageRead} />
+        </Tabs.Content>
+      </Tabs.Root>
+    </IntlProvider>
   );
 }

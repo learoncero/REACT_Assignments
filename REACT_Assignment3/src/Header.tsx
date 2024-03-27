@@ -1,23 +1,12 @@
-import { Message } from "./App";
-import Navigation from "./Navigation";
+import { useTranslations } from "use-intl";
 
-type Props = {
-  messages: Array<Message>;
-  tabIndex: number;
-  onTabChange(tabIndex: number): void;
-};
-
-export default function Header({ messages, tabIndex, onTabChange }: Props) {
+export default function Header() {
+  const t = useTranslations("Header");
   return (
     <div>
       <h1 className=" bg-slate-50 text-slate-800 flex items-center text-5xl font-extrabold dark:text-white py-8 px-10">
-        Message Board
+        {t("heading")}
       </h1>
-      <Navigation
-        messages={messages}
-        tabIndex={tabIndex}
-        onTabChange={onTabChange}
-      />
     </div>
   );
 }

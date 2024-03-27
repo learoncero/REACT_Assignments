@@ -1,9 +1,12 @@
+import * as Tabs from "@radix-ui/react-tabs";
+
 type Props = {
   label: string;
   isActive: boolean;
   tabIndex: number;
   onTabChange(tabIndex: number): void;
   unreadMessagesCount: number;
+  value: string;
 };
 
 export default function NavigationTab({
@@ -12,11 +15,13 @@ export default function NavigationTab({
   tabIndex,
   onTabChange,
   unreadMessagesCount,
+  value,
 }: Props) {
   const commonClasses = "pb-2";
   return (
     <div>
-      <button
+      <Tabs.Trigger
+        value={value}
         className={
           isActive
             ? commonClasses +
@@ -24,7 +29,7 @@ export default function NavigationTab({
               "text-slate-800 border-b-4 border-red-800 dark:text-white dark:border-red-600"
             : commonClasses +
               " " +
-              "text-slate-500 dark:text-gray-200 hover:border-b-4 hover:border-slate-500 hover:text-slate-800"
+              "text-slate-500 hover:border-b-4 hover:border-slate-500 hover:text-slate-800 focus-visible:border-b-4 focus-visible:border-slate-500 focus-visible:text-slate-800"
         }
         onClick={() => onTabChange(tabIndex)}
       >
@@ -35,7 +40,7 @@ export default function NavigationTab({
             : unreadMessagesCount !== 0
             ? "(" + unreadMessagesCount + ")"
             : null)}
-      </button>
+      </Tabs.Trigger>
     </div>
   );
 }

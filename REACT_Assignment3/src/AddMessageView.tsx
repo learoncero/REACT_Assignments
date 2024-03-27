@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
 import FormInputField from "./FormInputField";
 import FormSubmitButton from "./FormSubmitButton";
+import { useTranslations } from "use-intl";
 
 type Props = {
   onSubmit(subject: string, body: string): void;
@@ -21,16 +22,27 @@ export default function AddMessageView({ onSubmit }: Props) {
     form.subject.focus();
   }
 
+  const t = useTranslations("FormInputField");
+
   return (
     <form className="w-full max-w-sm" onSubmit={onFormSubmit}>
       <div className="md:flex md:items-center mb-6"></div>
-      <FormInputField
-        label="Subject"
-        name="subject"
-        type="text"
-        required={true}
-      />
-      <FormInputField label="Body" name="body" type="text" required={true} />
+      <fieldset>
+        <FormInputField
+          label={t("subject")}
+          name="subject"
+          type="text"
+          required={true}
+        />
+      </fieldset>
+      <fieldset>
+        <FormInputField
+          label={t("body")}
+          name="body"
+          type="text"
+          required={true}
+        />
+      </fieldset>
       <FormSubmitButton />
     </form>
   );
