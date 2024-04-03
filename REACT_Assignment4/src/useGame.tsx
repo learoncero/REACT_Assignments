@@ -26,6 +26,7 @@ export default function useGame() {
     const winner = getWinner(squares);
     if (winner) {
       setStatus("WON");
+      setCurPlayer(winner);
       setMaxRemainingMoves(0);
     } else if (maxRemainingMoves === 0) {
       setStatus("DRAW");
@@ -65,10 +66,10 @@ export default function useGame() {
   function onMarkSquare(rowIndex: number, columnIndex: number) {
     if (status !== "PLAYING" || squares[rowIndex][columnIndex]) return;
 
-    const newSquares = squares.map((row, rIndex) =>
-      row.map((square, cIndex) =>
-        rIndex === rowIndex && cIndex === columnIndex ? curPlayer : square
-      )
+    const newSquares = squares.map((row, i) =>
+      i === rowIndex
+        ? row.map((cell, j) => (j === columnIndex ? curPlayer : cell))
+        : row
     );
     setSquares(newSquares);
     setCurPlayer(curPlayer === "X" ? "O" : "X");
@@ -86,7 +87,9 @@ export default function useGame() {
   }
 
   function loadGameState() {
+    console.log("Loading game state from local storage");
     const savedState = localStorage.getItem(STORAGE_KEY);
+    console.log(savedState);
     if (savedState) {
       const { squares, curPlayer, status, maxRemainingMoves } =
         JSON.parse(savedState);
@@ -98,7 +101,7 @@ export default function useGame() {
   }
 
   function undoMove() {
-    if (moveHistory.length > 0) {
+    if (moveHistory.length > 0 && status === "PLAYING") {
       const previousMove = moveHistory.pop(); // Get the last move from history
       if (previousMove) {
         setSquares(previousMove);
