@@ -4,9 +4,7 @@ import { ReactNode } from "react";
 import Header from "@/app/Header";
 import HeaderUser from "@/app/HeaderUser";
 import Wrapper from "@/components/Wrapper";
-import { User } from "@/types";
 import "./globals.css";
-import { error } from "console";
 import UserService from "@/services/UserService";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,7 +28,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={inter.className}>
         <Header user={me && <HeaderUser user={me} />} />
-        <Wrapper children={""}>
+        <Wrapper>
           <main className="py-20">{children}</main>
         </Wrapper>
       </body>
