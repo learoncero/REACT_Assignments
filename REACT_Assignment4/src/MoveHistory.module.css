@@ -1,0 +1,16 @@
+.root {
+  padding: 5px 10px; /* Adjusted padding */
+  margin-bottom: 10px;
+  border: none;
+  border-radius: var(--radius-small);
+  font-size: inherit;
+}
+
+.disabled {
+  opacity: 0.5;
+  color: inherit;
+}
+
+.move {
+  background-color: var(--gray-200);
+}

@@ -20,38 +20,10 @@ export default function useGame() {
   const [maxRemainingMoves, setMaxRemainingMoves] = useState<number>(
     initialMaxRemainingMoves
   );
-  const [moveHistory, setMoveHistory] = useState<Squares[]>([]);
+  const [moveHistory, setMoveHistory] = useState<Squares[]>([initialSquares]);
+  const [currentMove, setCurrentMove] = useState<number>(0);
 
-  useEffect(() => {
-    const winner = getWinner(squares);
-    if (winner) {
-      setStatus("WON");
-      setCurPlayer(winner);
-      setMaxRemainingMoves(0);
-    } else if (maxRemainingMoves === 0) {
-      setStatus("DRAW");
-    }
-  }, [squares, maxRemainingMoves]);
-
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === STORAGE_KEY && event.newValue) {
-        const newState = JSON.parse(event.newValue);
-        setSquares(newState.squares);
-        setCurPlayer(newState.curPlayer);
-        setStatus(newState.status);
-        setMaxRemainingMoves(newState.maxRemainingMoves);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
-  useEffect(() => {
+  function saveToLocalStorage() {
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
@@ -59,9 +31,11 @@ export default function useGame() {
         curPlayer,
         status,
         maxRemainingMoves,
+        moveHistory,
+        currentMove,
       })
     );
-  }, [squares, curPlayer, status, maxRemainingMoves, moveHistory]);
+  }
 
   function onMarkSquare(rowIndex: number, columnIndex: number) {
     if (status !== "PLAYING" || squares[rowIndex][columnIndex]) return;
@@ -71,10 +45,39 @@ export default function useGame() {
         ? row.map((cell, j) => (j === columnIndex ? curPlayer : cell))
         : row
     );
+
     setSquares(newSquares);
-    setCurPlayer(curPlayer === "X" ? "O" : "X");
-    setMaxRemainingMoves(maxRemainingMoves - 1);
-    setMoveHistory([...moveHistory, squares]);
+    const newMoveHistory = moveHistory.slice(0, currentMove + 1);
+    setMoveHistory([...newMoveHistory, newSquares]);
+    setCurrentMove(currentMove + 1);
+
+    const winner = getWinner(newSquares);
+    if (winner) {
+      setStatus("WON");
+      return;
+    } else if (maxRemainingMoves === 1) {
+      setStatus("DRAW");
+      return;
+    } else {
+      setCurPlayer(curPlayer === "X" ? "O" : "X");
+      setMaxRemainingMoves(maxRemainingMoves - 1);
+    }
+
+    saveToLocalStorage();
+  }
+
+  function undoMove() {
+    if (currentMove > 0) {
+      setCurrentMove(currentMove - 1);
+      setSquares(moveHistory[currentMove - 1]);
+      setCurPlayer(currentMove % 2 === 0 ? "O" : "X");
+      setMaxRemainingMoves(9 - (currentMove - 1));
+      if (status === "WON" || status === "DRAW") {
+        setStatus("PLAYING");
+      }
+    }
+
+    saveToLocalStorage();
   }
 
   function resetGame() {
@@ -82,33 +85,50 @@ export default function useGame() {
     setCurPlayer(initialPlayer);
     setStatus(initialStatus);
     setMaxRemainingMoves(initialMaxRemainingMoves);
-    setMoveHistory([]);
+    setMoveHistory([initialSquares]);
+    setCurrentMove(0);
     localStorage.removeItem(STORAGE_KEY);
   }
 
   function loadGameState() {
-    console.log("Loading game state from local storage");
     const savedState = localStorage.getItem(STORAGE_KEY);
     console.log(savedState);
     if (savedState) {
-      const { squares, curPlayer, status, maxRemainingMoves } =
-        JSON.parse(savedState);
+      const {
+        squares,
+        curPlayer,
+        status,
+        maxRemainingMoves,
+        moveHistory,
+        currentMove,
+      } = JSON.parse(savedState);
       setSquares(squares);
       setCurPlayer(curPlayer);
       setStatus(status);
       setMaxRemainingMoves(maxRemainingMoves);
+      setMoveHistory(moveHistory);
+      setCurrentMove(currentMove);
     }
+
+    saveToLocalStorage();
   }
 
-  function undoMove() {
-    if (moveHistory.length > 0 && status === "PLAYING") {
-      const previousMove = moveHistory.pop(); // Get the last move from history
-      if (previousMove) {
-        setSquares(previousMove);
-        setCurPlayer(curPlayer === "X" ? "O" : "X");
-        setMaxRemainingMoves(maxRemainingMoves + 1);
-      }
+  function jumpTo(move: number) {
+    setCurrentMove(move);
+    setSquares(moveHistory[move as number]);
+    setCurPlayer((move as number) % 2 === 0 ? "X" : "O");
+    setMaxRemainingMoves(9 - (move as number));
+
+    const winner = getWinner(moveHistory[move as number]);
+    if (winner) {
+      setStatus("WON");
+    } else if (9 - (move as number) === 0) {
+      setStatus("DRAW");
+    } else {
+      setStatus("PLAYING");
     }
+
+    saveToLocalStorage();
   }
 
   return {
@@ -120,5 +140,8 @@ export default function useGame() {
     resetGame,
     loadGameState,
     undoMove,
+    moveHistory,
+    currentMove,
+    jumpTo,
   };
 }

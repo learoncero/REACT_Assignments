@@ -3,6 +3,7 @@ import Button from "./Button";
 import Status from "./Status";
 import styles from "./App.module.css";
 import useGame from "./useGame";
+import MoveHistory from "./MoveHistory";
 
 export default function App() {
   const {
@@ -14,6 +15,9 @@ export default function App() {
     resetGame,
     loadGameState,
     undoMove,
+    moveHistory,
+    currentMove,
+    jumpTo,
   } = useGame();
 
   return (
@@ -35,6 +39,11 @@ export default function App() {
           Undo last move
         </Button>
       </div>
+      <MoveHistory
+        moveHistory={moveHistory}
+        currentMove={currentMove}
+        jumpTo={jumpTo}
+      />
     </div>
   );
 }
