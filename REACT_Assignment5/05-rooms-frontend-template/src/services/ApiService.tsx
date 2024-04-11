@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-const API_URL = "http://localhost:50860";
+const API_URL = "http://localhost:49226";
 
 export default class ApiService {
   static async fetch(pathname: string) {
