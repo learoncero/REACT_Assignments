@@ -14,8 +14,8 @@ export default class RoomService {
   }
 
   static async getRoom(id: string) {
-    const room = await ApiService.fetch(`/rooms/${id}`);
-    return room as ApiResponse<Room>;
+    const room = (await ApiService.fetch(`/rooms/${id}`)).data;
+    return room as Room;
   }
 
   static async createRoom(

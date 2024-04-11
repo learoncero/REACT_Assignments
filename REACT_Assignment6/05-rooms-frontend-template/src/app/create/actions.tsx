@@ -3,7 +3,7 @@
 import RoomService from "@/services/RoomService";
 import { revalidatePath } from "next/cache";
 
-export async function onSubmit(data: FormData) {
+export default async function onSubmit(state, data: FormData) {
   const title = data.get("title") as string;
   const description = data.get("description") as string;
   const heroUrl = data.get("heroURL") as string;
@@ -16,10 +16,9 @@ export async function onSubmit(data: FormData) {
     pricePerNight
   );
 
-  if (result.status === 200) {
+  if (result.status === 201) {
     revalidatePath("/rooms");
   }
 
-  // Is returned to `[state] = useFormState(…)`
   return result;
 }

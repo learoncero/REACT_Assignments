@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:53433";
+const API_URL = "http://localhost:50705";
 
 export type ApiResponse<Data = unknown> = {
   statusText: string;

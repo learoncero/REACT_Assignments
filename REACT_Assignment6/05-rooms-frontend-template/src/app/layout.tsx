@@ -6,6 +6,7 @@ import HeaderUser from "@/app/HeaderUser";
 import Wrapper from "@/components/Wrapper";
 import "./globals.css";
 import UserService from "@/services/UserService";
+import NotificationProvider from "@/components/NotificationProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,9 @@ export default async function RootLayout({ children }: Props) {
       <body className={inter.className}>
         <Header user={me && <HeaderUser user={me} />} />
         <Wrapper>
-          <main className="py-20">{children}</main>
+          <NotificationProvider>
+            <main className="py-20">{children}</main>
+          </NotificationProvider>
         </Wrapper>
       </body>
     </html>
