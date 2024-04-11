@@ -1,9 +1,21 @@
-import CreateRoomFormInputField from "./CreateRoomFormInputField";
-import { onSubmit } from "./actions";
+"use client";
 
-export default function onSubmitForm() {
+import { useFormState } from "react-dom";
+import CreateRoomFormInputField from "./CreateRoomFormInputField";
+import Notification from "@/components/Notification";
+
+type Props = {
+  onSubmit: (state, data: FormData) => Promise<any>;
+};
+
+export default function onSubmitForm({ onSubmit }: Props) {
+  const [state, formAction] = useFormState(onSubmit, undefined);
+
+  const hasResponse = state !== undefined;
+  const hasError = hasResponse && state.status !== 200;
+
   return (
-    <form action={onSubmit} className="flex flex-col gap-5">
+    <form action={formAction} className="flex flex-col gap-5">
       <CreateRoomFormInputField label="Title" type="text" name="title" />
       <CreateRoomFormInputField
         label="Description"
@@ -26,6 +38,11 @@ export default function onSubmitForm() {
       >
         Submit
       </button>
+      {hasError && (
+        <Notification type="error">
+          An unexpected error occured, please try again later.
+        </Notification>
+      )}
     </form>
   );
 }

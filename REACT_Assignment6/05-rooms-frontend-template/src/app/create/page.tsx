@@ -1,5 +1,6 @@
 import CreateRoomForm from "./CreateRoomForm";
 import Text from "@/components/Text";
+import { onSubmit } from "./actions";
 
 export default function CreateCabinPage() {
   return (
@@ -7,7 +8,7 @@ export default function CreateCabinPage() {
       <Text as="h1" variant="h1" className="pb-10">
         Add cabin
       </Text>
-      <CreateRoomForm />
+      <CreateRoomForm onSubmit={onSubmit} />
     </div>
   );
 }
